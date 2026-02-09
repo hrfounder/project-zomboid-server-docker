@@ -166,17 +166,21 @@ if [ -n "${DISPLAYNAME}" ]; then
   sed -i "s/^PublicName=.*/PublicName=${DISPLAYNAME}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
 fi
 
-if [ -n "${MOD_IDS}" ]; then
- 	echo "*** INFO: Found Mods including ${MOD_IDS} ***"
-	sed -i "s/Mods=.*/Mods=${MOD_IDS}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
-fi
-
-if [ -n "${WORKSHOP_IDS}" ]; then
- 	echo "*** INFO: Found Workshop IDs including ${WORKSHOP_IDS} ***"
-	sed -i "s/WorkshopItems=.*/WorkshopItems=${WORKSHOP_IDS}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+if [ "${SELF_MANAGED_MODS}" == "1" ] || [ "${SELF_MANAGED_MODS,,}" == "true" ]; then
+  echo "*** INFO: SELF_MANAGED_MODS is set; leaving Mods and WorkshopItems untouched ***"
 else
- 	echo "*** INFO: Workshop IDs is empty, clearing configuration ***"
-	sed -i 's/WorkshopItems=.*$/WorkshopItems=/' "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+  if [ -n "${MOD_IDS}" ]; then
+    echo "*** INFO: Found Mods including ${MOD_IDS} ***"
+    sed -i "s/Mods=.*/Mods=${MOD_IDS}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+  fi
+
+  if [ -n "${WORKSHOP_IDS}" ]; then
+    echo "*** INFO: Found Workshop IDs including ${WORKSHOP_IDS} ***"
+    sed -i "s/WorkshopItems=.*/WorkshopItems=${WORKSHOP_IDS}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+  else
+    echo "*** INFO: Workshop IDs is empty, clearing configuration ***"
+    sed -i 's/WorkshopItems=.*$/WorkshopItems=/' "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+  fi
 fi
 
 # Fixes EOL in script file for good measure

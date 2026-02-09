@@ -64,6 +64,8 @@ This image uses some env variables as arguments in the server command, allowing 
 
 `MOD_IDS:` Semicolon separated list of Mod IDs to install to the server. NOTE - B42 changes the way mod IDs must be supplied (\mod1;\mod2 inside the servertest.ini file) when defining this variable, preceed each mod id with two backslashes (\\) to escape the backslash into the ini file.
 
+`SELF_MANAGED_MODS:` When set to `1` or `true`, the container will NOT modify the `Mods` or `WorkshopItems` entries in the server INI. Use this if you manage mods/workshop items externally (for example via bind mounts or an external workshop manager). Default behavior (when unset or `false`) is for the entrypoint script to update `Mods` and `WorkshopItems` based on `MOD_IDS`/`WORKSHOP_IDS`.
+
 `LANG:` This env variable will set the container locales, which will be used by the pz server to set the language. Example (en_EN.UTF-8, es_ES.UTF-8...)
 
 Mods will install on second server start
