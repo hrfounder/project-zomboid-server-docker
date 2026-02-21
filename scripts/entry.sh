@@ -37,8 +37,7 @@ fi
 # This replaces the failing Dockerfile build step. 
 # It downloads the game into the volume on the first run.
 echo "*** INFO: Checking for game updates (App ID: ${STEAMAPPID})... ***"
-su steam -c "bash ${STEAMCMDDIR}/steamcmd.sh +force_install_dir ${STEAMAPPDIR} +login anonymous +app_update ${STEAMAPPID} -beta ${STEAMAPPBRANCH} validate +quit"
-
+su steam -c "bash ${STEAMCMDDIR}/steamcmd.sh +force_install_dir ${STEAMAPPDIR} +login anonymous +app_update ${STEAMAPPID} -beta ${STEAMAPPBRANCH:-public} validate +quit"
 # ==========================================
 # 3. ORIGINAL SCRIPT LOGIC START
 # ==========================================
