@@ -17,6 +17,7 @@ services:
       - "27015:27015/tcp"
     volumes:
       # Server data
-      - ./data:/home/steam/Zomboid
+      - ./data1:/home/steam/Zomboid
       # Workshop mods folder
-      - ./workshop-mods:/home/steam/pz-dedicated/steamapps/workshop
+      - ./game1:/home/steam/pz-dedicated
+

@@ -24,12 +24,21 @@ if [ ! -f "${HOMEDIR}/Zomboid/Server/${SERVERNAME_FILE}.ini" ]; then
     chown steam:steam "${HOMEDIR}/Zomboid/Server/${SERVERNAME_FILE}.ini"
 fi
 
-# Ensure spawnregions file exists (often used in the map logic below)
+# Ensure spawnregions file exists and has base structure (needed for workshop map logic)
 if [ ! -f "${HOMEDIR}/Zomboid/Server/${SERVERNAME_FILE}_spawnregions.lua" ]; then
-    touch "${HOMEDIR}/Zomboid/Server/${SERVERNAME_FILE}_spawnregions.lua"
+    echo "*** INFO: Generating default ${SERVERNAME_FILE}_spawnregions.lua... ***"
+    cat <<EOF > "${HOMEDIR}/Zomboid/Server/${SERVERNAME_FILE}_spawnregions.lua"
+function SpawnRegions()
+    return {
+        { name = "Muldraugh, KY", file = "media/maps/Muldraugh, KY/spawnpoints.lua" },
+        { name = "Riverside, KY", file = "media/maps/Riverside, KY/spawnpoints.lua" },
+        { name = "Rosewood, KY", file = "media/maps/Rosewood, KY/spawnpoints.lua" },
+        { name = "West Point, KY", file = "media/maps/West Point, KY/spawnpoints.lua" }
+    }
+end
+EOF
     chown steam:steam "${HOMEDIR}/Zomboid/Server/${SERVERNAME_FILE}_spawnregions.lua"
 fi
-
 # ==========================================
 # 2. RUNTIME INSTALL / UPDATE
 # ==========================================
